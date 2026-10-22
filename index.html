@@ -1,0 +1,724 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Tapetes de Rato DouroID</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a printed A4 catalogue shown as a book — spreads on wide screens, single pages on phones, turned sideways like real paper. */
+:root{
+  --desk:#222925;        /* table the book rests on */
+  --desk-ink:#E6EBE7;
+  --desk-muted:#9AA79F;
+  --paper:#FFFFFF;
+  --paper-2:#F2F3EF;     /* thumbnail ground */
+  --ink:#18211B;
+  --muted:#6A746D;
+  --rule:#E1E4DF;
+  --green:#1E8E4E;       /* the "ID" green of the DouroID wordmark */
+  --green-lite:#3CC47A;
+  --display:"Urbanist", "Segoe UI", system-ui, sans-serif;
+  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--desk);color:var(--desk-ink);font-family:var(--body);overflow:hidden;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));box-sizing:border-box}
+.app{height:100%;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;flex:none}
+.brand{font:800 20px var(--display);letter-spacing:-.02em;white-space:nowrap}
+.brand b{color:var(--green-lite);font-weight:800}
+.bar select{background:rgba(255,255,255,.06);color:var(--desk-ink);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:7px 10px;font:500 13px var(--body);max-width:52vw}
+.bar select:focus-visible,.navb:focus-visible{outline:2px solid var(--green-lite);outline-offset:2px}
+.stagewrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:14px}
+.navb{flex:none;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:var(--desk-ink);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.navb:hover{background:rgba(255,255,255,.14)}
+.navb:disabled{opacity:.2;cursor:default}
+.navb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stage{position:relative;flex:none;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.book{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform}
+.book.noanim{transition:none}
+.slot{position:absolute;top:0;width:794px;height:1123px;z-index:1;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.spine{position:absolute;top:0;left:754px;width:80px;height:1123px;pointer-events:none;z-index:2;
+  background:linear-gradient(to right,rgba(0,0,0,0) 0%,rgba(0,0,0,.10) 40%,rgba(0,0,0,.22) 50%,rgba(0,0,0,.10) 60%,rgba(0,0,0,0) 100%)}
+.stage.single{overflow:hidden}
+.slot.leaf{z-index:3;box-shadow:none;will-change:clip-path}
+.slot{contain:layout paint;backface-visibility:hidden}
+.slot.flap{z-index:4;transform-origin:0 0;will-change:transform;contain:none;overflow:visible;box-shadow:none;background:none}
+.flapclip{position:absolute;left:-60px;top:0;width:1708px;height:1123px;overflow:hidden;z-index:4;pointer-events:none}
+.flapclip>.slot.flap{left:60px!important}
+.flapin{position:absolute;inset:0;overflow:hidden;background:var(--paper)}
+.flapin.paper{background:#F4F3EE}
+.slot.flap>.page{transform:none}
+.shade{position:absolute;left:0;top:0;height:3000px;will-change:transform,opacity;transform-origin:0 0;pointer-events:none;z-index:5}
+.shade.fold{width:150px;background:linear-gradient(to right,rgba(0,0,0,.22),rgba(0,0,0,.06) 35%,rgba(255,255,255,.18) 70%,rgba(0,0,0,0))}
+.shade.curve{width:90px;background:linear-gradient(to right,rgba(0,0,0,.18),rgba(0,0,0,0))}
+.shade.cast{width:180px;background:linear-gradient(to right,rgba(0,0,0,.38),rgba(0,0,0,0))}
+.foot{display:flex;align-items:center;justify-content:center;gap:14px;padding-block:10px 14px;flex:none;font:500 13px var(--body);color:var(--desk-muted);font-variant-numeric:tabular-nums}
+.foot strong{color:var(--desk-ink);font-weight:600}
+
+.stage *{user-select:none;-webkit-user-select:none;-webkit-user-drag:none}
+.stage ::selection{background:transparent}
+@media (max-width:560px){.navb{display:none}.stagewrap{gap:8px}.hint{display:none}}
+
+/* ---------- printed page ---------- */
+.page{position:relative;width:794px;height:1123px;background:var(--paper);color:var(--ink);font-family:var(--body);overflow:hidden;box-sizing:border-box}
+.page.L{padding:96px 56px 60px 92px}
+.page.R{padding:96px 92px 60px 56px}
+.box{position:relative;width:646px;height:967px}
+.box>*{position:absolute}
+.pnum{position:absolute;top:40px;width:46px;height:34px;background:var(--green);color:#fff;font:700 15px/34px var(--display);text-align:center;font-variant-numeric:tabular-nums}
+.L .pnum{left:40px}.R .pnum{right:40px}
+.pcat{position:absolute;top:92px;font:600 9.5px var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
+.L .pcat{left:56px;transform:rotate(180deg)}.R .pcat{right:56px}
+.tabs{position:absolute;top:0;bottom:0;width:22px;display:flex;flex-direction:column}
+.L .tabs{left:0}.R .tabs{right:0}
+.tabs span{flex:1;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font:600 8px var(--body);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.95);opacity:.32}
+.L .tabs span{transform:rotate(180deg)}
+.tabs span.on{opacity:1}
+.pfoot{position:absolute;bottom:26px;font:500 9px var(--body);letter-spacing:.06em;color:var(--muted)}
+.L .pfoot{left:92px}.R .pfoot{right:92px}
+.page h2{top:0;left:0;margin:0;font:300 52px/1 var(--display);letter-spacing:-.025em;color:var(--ink);white-space:nowrap}
+.page h2 b{font-weight:800;color:var(--green)}
+.hr{height:1px;background:var(--rule);left:0;right:0}
+.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:normal}
+.ci{border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 0 0 5px #fff,0 6px 18px rgba(20,30,24,.18)}
+.ci img{width:100%;height:100%;object-fit:cover;display:block}
+.th{display:flex;gap:7px}
+.th>div{position:relative;width:62px;height:62px;background:var(--paper-2);border-radius:4px;flex:none}
+.th>div>img{position:absolute;inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);object-fit:contain;mix-blend-mode:normal}
+.th.sm>div{width:46px;height:46px}
+.th.col{flex-direction:column}
+.pt h3{margin:0 0 6px;font:600 25px/1.1 var(--display);letter-spacing:-.01em}
+.pt h3 small{font-weight:300;color:var(--muted);font-size:20px;margin-left:6px;font-variant-numeric:tabular-nums}
+.pt p{margin:0 0 10px;font-size:11.5px;line-height:1.5;color:#4E5851;text-wrap:pretty}
+.spec{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:5px 14px;font-size:10.5px;color:#3B443D}
+.spec li{display:flex;align-items:center;gap:5px}
+.spec svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sw{display:flex;gap:5px;margin-top:9px;align-items:center;font-size:10px;color:var(--muted)}
+.sw i{width:12px;height:12px;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.inc{margin:8px 0 0;font-size:10.5px;line-height:1.5;color:#4E5851}
+.inc b{color:var(--ink);font-weight:600}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 10px}
+.chips div{font-size:9.5px;color:#4E5851;display:flex;flex-direction:column;gap:4px}
+.chips i{display:block;height:38px;border-radius:5px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.lbl{font:600 9.5px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* cover + back + intro */
+.cover{background:#EEF0EA;padding:0}
+.cover .ph>img{mix-blend-mode:normal}
+.back{background:var(--ink);color:#EEF2EE;padding:0}
+/* product detail */
+[hidden]{display:none!important}
+.pt[data-prod]{cursor:pointer}
+.pt[data-prod]:hover,.pt[data-prod]:focus-visible{outline:2px solid rgba(30,142,78,.4);outline-offset:8px;border-radius:2px}
+.more{display:inline-block;margin-top:9px;font:600 10.5px var(--body);letter-spacing:.04em;color:var(--green)}
+.page:not(.cover):not(.back) .ph,.page:not(.cover):not(.back) .ci,.page:not(.cover):not(.back) .th>div{cursor:zoom-in}
+.modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(10,14,11,.74);box-sizing:border-box;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px))}
+.sheet{position:relative;background:var(--paper);color:var(--ink);width:min(1080px,100%);max-height:100%;overflow:auto;border-radius:10px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);box-shadow:0 30px 80px rgba(0,0,0,.5);animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.gal{background:var(--paper-2);padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.gmain{position:relative;width:100%;aspect-ratio:1/1;max-width:100%}
+.gmain img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.garr{position:absolute;top:50%;margin-top:-22px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.garr svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.garr.l{left:0}.garr.r{right:0}
+.gcount{font:500 12px var(--body);color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.gthumbs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.gthumbs button{position:relative;width:64px;height:64px;border:0;border-radius:6px;background:#fff;cursor:pointer;padding:0;box-shadow:inset 0 0 0 1px var(--rule)}
+.gthumbs button img{position:absolute;inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);object-fit:contain}
+.gthumbs button[aria-current="true"]{box-shadow:inset 0 0 0 2px var(--green)}
+.info{padding:40px 36px 32px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.info h2{margin:0;font:600 40px/1.05 var(--display);letter-spacing:-.02em;text-wrap:balance}
+.info h2 small{font-weight:300;color:var(--muted);font-size:30px;margin-left:8px;font-variant-numeric:tabular-nums}
+.info .desc{margin:0;font-size:15px;line-height:1.6;color:#3E4740;max-width:62ch}
+.dl{display:grid;grid-template-columns:auto 1fr;font-size:13.5px;margin:0}
+.dl dt,.dl dd{margin:0;padding:9px 0;border-bottom:1px solid var(--rule)}
+.dl dt{color:var(--muted);padding-right:20px}
+.dl dd{font-weight:600;text-align:right}
+.cols{display:flex;flex-wrap:wrap;gap:8px}
+.cols span{display:inline-flex;align-items:center;gap:7px;padding:6px 11px 6px 7px;border-radius:999px;background:var(--paper-2);font-size:12.5px}
+.cols i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.pval{font:600 28px var(--display);color:var(--ink);letter-spacing:-.01em}.ptab{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:2px}.ptab th{font:500 11px var(--body);color:var(--muted);text-align:left;padding:6px 8px;background:#F2F3EF}.ptab td{font:600 15px var(--display);color:var(--ink);padding:8px;border-bottom:1px solid var(--rule)}.ptab td small{font:400 10px var(--body);color:var(--muted)}.pnote{font-size:11.5px;color:var(--muted);margin:8px 0 0;padding-left:16px;display:grid;gap:2px}
+.pt .preco{margin-top:6px;font:600 13px var(--display);color:var(--green)}.pt .preco span{font:400 10px var(--body);color:var(--muted);margin-left:4px}
+.info .blk{font-size:13.5px;line-height:1.55;color:#3E4740}
+.info .blk b{display:block;font:600 10px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ask{margin-top:auto;border-top:2px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:#3E4740;user-select:text;-webkit-user-select:text}
+.ask strong{color:var(--ink)}
+.xclose{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border-radius:50%;border:0;background:var(--ink);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.xclose svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.xclose:focus-visible,.garr:focus-visible,.gthumbs button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media (max-width:760px){.sheet{grid-template-columns:1fr}.info{padding:24px 20px}.info h2{font-size:32px}.info h2 small{font-size:24px}.gal{padding:20px}}
+@media print{
+  @page{size:A4;margin:0}
+  body{overflow:visible;background:#fff;padding:0}
+  .app{display:none}
+  .printall{display:block!important}
+  .printall .page{break-after:page}
+}
+
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dim" viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></symbol>
+  <symbol id="i-wt" viewBox="0 0 24 24"><path d="M6 8h12l2 12H4z"/><circle cx="12" cy="5" r="2"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+</svg>
+
+<div class="app">
+  <div class="bar">
+    <div class="brand">Douro<b>ID</b></div>
+    <label for="jump" style="position:absolute;left:-9999px">Ir para secção</label>
+    <select id="jump">
+      <option value="0">Capa</option>
+      <option value="2">Índice</option>
+      <option value="3">Clássicos</option>
+      <option value="4">Feltro &amp; Apoio de Pulso</option>
+      <option value="5">Carregadores sem fios</option>
+      <option value="6">Multifunções</option>
+      <option value="7">Contactos</option>
+    </select>
+  </div>
+  <div class="stagewrap" id="wrap">
+    <button class="navb" id="prev" aria-label="Página anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="stage" id="stage" role="region" aria-label="Catálogo em formato de livro"><div class="book" id="book"></div></div>
+    <button class="navb" id="next" aria-label="Página seguinte"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+  <div class="foot"><strong id="where">Capa</strong><span id="count"></span><span class="hint">Arraste a margem da página para a virar</span></div>
+</div>
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <button class="xclose" id="mClose" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="gal">
+      <div class="gmain"><img id="mImg" src="" alt="">
+        <button class="garr l" id="mPrev" aria-label="Foto anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="garr r" id="mNext" aria-label="Foto seguinte"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+      <div class="gcount" id="mCount"></div>
+      <div class="gthumbs" id="mThumbs"></div>
+    </div>
+    <div class="info" id="mInfo"></div>
+  </div>
+</div>
+<div class="printall" id="printall" style="display:none"></div>
+
+<template id="tpl">
+<section class="page R cover" data-plain style="background:#FFFFFF">
+  <div style="position:absolute;left:64px;top:96px;display:flex;flex-direction:column;gap:28px">
+    <div style="font:800 140px/0.9 var(--display);letter-spacing:-.05em;color:var(--ink)">Douro<span style="color:var(--green)">ID</span></div>
+    <div style="width:96px;height:6px;background:var(--green)"></div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font:600 13px var(--body);letter-spacing:.32em;text-transform:uppercase;color:var(--muted)">Catálogo</div>
+      <div style="font:300 40px/1.15 var(--display);color:var(--ink)">Tapetes<br>de Rato</div>
+    </div>
+  </div>
+  <img src="img/p06-minet.png" alt="" style="position:absolute;left:380px;top:520px;width:360px;mix-blend-mode:multiply">
+  <img src="img/p02-roland.png" alt="" style="position:absolute;left:40px;top:640px;width:330px;mix-blend-mode:multiply">
+  <img src="img/p07-kaishen.png" alt="" style="position:absolute;left:330px;top:790px;width:380px;mix-blend-mode:multiply">
+</section>
+<section class="page L" data-plain></section>
+<section class="page R" data-num="01" data-cat="" data-catname="Catálogo">
+  <div class="box">
+    <h2>Feito <b>à sua medida</b></h2>
+    <div style="top:92px;left:0;width:300px">
+      <p style="margin:0 0 14px;font:400 16px/1.5 var(--body);color:var(--ink)">A DouroID é uma marca de Vila Real que personaliza vestuário e brindes com a identidade de cada cliente.</p>
+      <p style="margin:0;font-size:12.5px;line-height:1.6;color:#4E5851">Neste catálogo reunimos tapetes de rato para empresas, escritórios, eventos e ofertas a clientes. Todos podem levar o seu logótipo. Escolha o artigo, envie-nos a sua imagem e preparamos o orçamento.</p>
+    </div>
+    <div style="top:92px;left:350px;width:296px">
+      <div class="lbl" style="margin-bottom:12px">Personalização</div>
+      <div style="display:grid;gap:10px;font-size:12px;line-height:1.45;color:#4E5851">
+        <div><b style="color:var(--ink);font:600 15px var(--display)">Impressão DTF</b><br>Cores vivas e detalhe fiel em qualquer tapete.</div>
+        <div><b style="color:var(--ink);font:600 15px var(--display)">Sublimação</b><br>Imagem total, com cores intensas e duráveis, nos tapetes de poliéster.</div>
+      </div>
+    </div>
+    <div class="hr" style="top:330px"></div>
+    <div style="top:360px;left:0;width:646px">
+      <div class="lbl" style="margin-bottom:12px">Índice</div>
+      <div style="font:400 15px var(--display);font-variant-numeric:tabular-nums"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);break-inside:avoid"><span>Tapetes Clássicos</span><span style="color:var(--green);font-weight:600">02</span></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);break-inside:avoid"><span>Feltro &amp; Apoio de Pulso</span><span style="color:var(--green);font-weight:600">03</span></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);break-inside:avoid"><span>Carregadores sem Fios</span><span style="color:var(--green);font-weight:600">04</span></div><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);break-inside:avoid"><span>Multifunções</span><span style="color:var(--green);font-weight:600">05</span></div></div>
+    </div>
+    <div style="top:900px;left:0;width:646px;display:flex;justify-content:space-between;align-items:flex-end;font-size:11.5px;color:#4E5851;line-height:1.6">
+      <div><b style="color:var(--ink)">Preços por unidade, acresce IVA.</b><br>Personalização orçamentada à parte.</div>
+      <div style="text-align:right">geraldouroid@gmail.com<br>939 898 827 · 937 659 457</div>
+    </div>
+  </div>
+</section>
+<section class="page L" data-num="02" data-cat="cl">
+  <div class="box">
+    <h2>Tapetes <b>Clássicos</b></h2>
+    <div class="ph" style="left:0px;top:95px;width:311px;height:250px"><img src="img/p01-vaniat.png" alt="Vaniat"></div>
+    <div class="pt" style="top:360px;left:0px;width:300px">
+      <h3>Vaniat<small>4387</small></h3>
+      <p>Tapete de rato retangular em poliéster com base de borracha antiderrapante. Superfície lisa, ideal para sublimação de logótipos e imagens a cores.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>22 × 18 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF · Sublimação</li></ul>
+      <div class="preco">5 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:95px;width:311px;height:250px"><img src="img/p02-roland.png" alt="Roland"></div>
+    <div class="pt" style="top:360px;left:335px;width:300px">
+      <h3>Roland<small>5520</small></h3>
+      <p>Tapete de rato redondo em poliéster com base de borracha antiderrapante. Compacto e fácil de personalizar.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>Ø 20 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF · Sublimação</li></ul>
+      <div class="preco">5 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:0px;top:550px;width:311px;height:250px"><img src="img/p03-tonya.png" alt="Tonya"></div>
+    <div class="pt" style="top:815px;left:0px;width:300px">
+      <h3>Tonya<small>20151</small></h3>
+      <p>Tapete de rato retangular em cortiça natural com base de borracha antiderrapante. Um acabamento sustentável e com carácter.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>22 × 18 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">5 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:550px;width:311px;height:250px"><img src="img/p04-topick.png" alt="Topick"></div>
+    <div class="pt" style="top:815px;left:335px;width:300px">
+      <h3>Topick<small>1286</small></h3>
+      <p>Tapete de rato redondo em cortiça natural com base de borracha antiderrapante.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>Ø 20 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">5 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="hr" style="top:533px"></div>
+  </div>
+</section>
+<section class="page R" data-num="03" data-cat="ap">
+  <div class="box">
+    <h2>Feltro <b>&amp; Apoio de Pulso</b></h2>
+    <div class="ph" style="left:0px;top:95px;width:311px;height:250px"><img src="img/p05-lena.png" alt="Lena"></div>
+    <div class="pt" style="top:360px;left:0px;width:300px">
+      <h3>Lena<small>20216</small></h3>
+      <p>Tapete de rato em feltro de RPET (plástico reciclado) com base de silicone antiderrapante.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>22 × 18 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">5 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:95px;width:311px;height:250px"><img src="img/p06-minet.png" alt="Minet"></div>
+    <div class="pt" style="top:360px;left:335px;width:300px">
+      <h3>Minet<small>6140</small></h3>
+      <p>Tapete de rato com apoio de pulso acolchoado, em poliéster com base de borracha antiderrapante. Mais conforto em horas de trabalho.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>20,5 × 24,3 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF · Sublimação</li></ul>
+      <div class="preco">8 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:0px;top:550px;width:311px;height:250px"><img src="img/p07-kaishen.png" alt="Kaishen"></div>
+    <div class="pt" style="top:815px;left:0px;width:300px">
+      <h3>Kaishen<small>1870</small></h3>
+      <p>Tapete de rato em cortiça com apoio de pulso acolchoado e base de borracha antiderrapante.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>20 × 22,3 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">8 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:550px;width:311px;height:250px"><img src="img/p08-freila.png" alt="Freila"></div>
+    <div class="pt" style="top:815px;left:335px;width:300px">
+      <h3>Freila<small>1871</small></h3>
+      <p>Tapete de rato em poliéster RPET (reciclado) com apoio de pulso acolchoado e base de borracha antiderrapante.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>20 × 22,3 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">8 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="hr" style="top:533px"></div>
+  </div>
+</section>
+<section class="page L" data-num="04" data-cat="ca">
+  <div class="box">
+    <h2>Carregadores <b>sem Fios</b></h2>
+    <div class="ph" style="left:0px;top:95px;width:311px;height:250px"><img src="img/p12-kimy.png" alt="Kimy"></div>
+    <div class="pt" style="top:360px;left:0px;width:300px">
+      <h3>Kimy<small>1194</small></h3>
+      <p>Tapete de rato com carregador sem fios de 10 W, em poliéster RPET com veludo. Dobra-se para servir de suporte ao telemóvel.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>26,5 × 20,5 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">10 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:95px;width:311px;height:250px"><img src="img/p13-dangox.png" alt="Dangox"></div>
+    <div class="pt" style="top:360px;left:335px;width:300px">
+      <h3>Dangox<small>21330</small></h3>
+      <p>Tapete de rato dobrável em PU reciclado com carregador sem fios de 10 W. Dobrado, serve de suporte para o telemóvel.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>20,5 × 8,8 cm (dobrado)</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">10 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:0px;top:550px;width:311px;height:250px"><img src="img/p14-bistol.png" alt="Bistol"></div>
+    <div class="pt" style="top:815px;left:0px;width:300px">
+      <h3>Bistol<small>1366</small></h3>
+      <p>Base de carregamento sem fios de 10 W em bambu natural, redonda, que serve também de tapete de rato.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>Ø 21 × 0,8 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">6 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:550px;width:311px;height:250px"><img src="img/p15-relium.png" alt="Relium"></div>
+    <div class="pt" style="top:815px;left:335px;width:300px">
+      <h3>Relium<small>6615</small></h3>
+      <p>Tapete de rato em cortiça com carregador sem fios de 5 W e veludo. Dobra-se para servir de suporte ao telemóvel.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>26,5 × 20,5 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">8 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="hr" style="top:533px"></div>
+  </div>
+</section>
+<section class="page R" data-num="05" data-cat="mf">
+  <div class="box">
+    <h2>Tapetes <b>Multifunções</b></h2>
+    <div class="ph" style="left:0px;top:95px;width:311px;height:250px"><img src="img/p09-hossian.png" alt="Hossian"></div>
+    <div class="pt" style="top:360px;left:0px;width:300px">
+      <h3>Hossian<small>20247</small></h3>
+      <p>Tapete multifunções em poliéster RPET e bambu, com organizador amovível e carregador sem fios de 15 W. Dobrável, com base antiderrapante.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>20,8 × 28 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">12 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="ph" style="left:335px;top:95px;width:311px;height:250px"><img src="img/p10-craig.png" alt="Craig"></div>
+    <div class="pt" style="top:360px;left:335px;width:300px">
+      <h3>Craig<small>20246</small></h3>
+      <p>Tapete multifunções em poliéster RPET e bambu, com hub USB (1 porta Tipo C e 4 portas USB 2.0) e suporte para telemóvel.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>22 × 24 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">18 €<span>/un. + IVA</span></div>
+    </div>
+    <div class="hr" style="top:533px"></div>
+    <div class="ph" style="left:0px;top:560px;width:380px;height:300px"><img src="img/p11-deuz.png" alt="Deuz"></div>
+    <div class="pt" style="top:640px;left:410px;width:236px">
+      <h3>Deuz<small>20860</small></h3>
+      <p>Tapete multifunções em poliéster RPET com carregador sem fios de 15 W, espaços para canetas e suporte para telemóvel.</p>
+      <ul class="spec"><li><svg><use href="#i-dim"/></svg>31 × 27 cm</li><li><svg><use href="#i-pen"/></svg>Impressão DTF</li></ul>
+      <div class="preco">8 €<span>/un. + IVA</span></div>
+    </div>
+  </div>
+</section>
+<section class="page L back" data-plain>
+  <div style="position:absolute;top:300px;left:0;right:0;text-align:center">
+    <div style="font:800 96px/1 var(--display);letter-spacing:-.05em">Douro<span style="color:var(--green-lite)">ID</span></div>
+    <div style="margin-top:18px;font:300 26px var(--display);color:#C9D2CB">Peça o seu orçamento</div>
+  </div>
+  <div style="position:absolute;top:520px;left:160px;right:160px;display:grid;gap:14px;font:500 17px var(--body);text-align:center;color:#EEF2EE">
+    <div>douroid.com</div>
+    <div>geraldouroid@gmail.com</div>
+    <div style="font-variant-numeric:tabular-nums">939 898 827 · 937 659 457</div>
+    <div>@douroid</div>
+  </div>
+  <div style="position:absolute;left:80px;right:80px;bottom:80px;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.25);padding-top:16px;font:500 12px var(--body);color:#9AA79F">
+    <span>Impressão · Estampagens · Bordados · Vinil</span><span>Vila Real · Portugal</span>
+  </div>
+</section>
+
+</template>
+
+<script>
+(function(){ // livro
+  var PROD={"p01": {"n": "Vaniat", "r": "4387", "cat": "Clássicos", "d": "Tapete de rato retangular em poliéster com base de borracha antiderrapante. Superfície lisa, ideal para sublimação de logótipos e imagens a cores.", "s": [["Dimensões", "22 × 18 cm"], ["Material", "Poliéster · Borracha"]], "c": [["Preto", "#1B1B1B"], ["Verde", "#1C8A3C"], ["Amarelo", "#F2D21B"], ["Laranja", "#E8571F"], ["Rosa", "#E5218A"], ["Vermelho", "#D62A1F"], ["Azul", "#234A8C"]], "p": "Impressão DTF · Sublimação", "g": [["img/p01-vaniat.png", "Vaniat"], ["img/p01-cores.png", "Vaniat"], ["img/p01-amostra.png", "Vaniat"]], "pr": 5}, "p02": {"n": "Roland", "r": "5520", "cat": "Clássicos", "d": "Tapete de rato redondo em poliéster com base de borracha antiderrapante. Compacto e fácil de personalizar.", "s": [["Dimensões", "Ø 20 cm"], ["Material", "Poliéster · Borracha"]], "c": [["Vermelho", "#CF2238"], ["Preto", "#1B1B1B"], ["Verde", "#1C9A4C"], ["Azul", "#234A8C"]], "p": "Impressão DTF · Sublimação", "g": [["img/p02-roland.png", "Roland"], ["img/p02-cores.png", "Roland"], ["img/p02-amostra.png", "Roland"]], "pr": 5}, "p03": {"n": "Tonya", "r": "20151", "cat": "Clássicos", "d": "Tapete de rato retangular em cortiça natural com base de borracha antiderrapante. Um acabamento sustentável e com carácter.", "s": [["Dimensões", "22 × 18 cm"], ["Material", "Cortiça · Borracha"]], "c": null, "p": "Impressão DTF", "g": [["img/p03-tonya.png", "Tonya"]], "pr": 5}, "p04": {"n": "Topick", "r": "1286", "cat": "Clássicos", "d": "Tapete de rato redondo em cortiça natural com base de borracha antiderrapante.", "s": [["Dimensões", "Ø 20 cm"], ["Material", "Cortiça · Borracha"]], "c": null, "p": "Impressão DTF", "g": [["img/p04-topick.png", "Topick"]], "pr": 5}, "p05": {"n": "Lena", "r": "20216", "cat": "Feltro & Apoio de Pulso", "d": "Tapete de rato em feltro de RPET (plástico reciclado) com base de silicone antiderrapante.", "s": [["Dimensões", "22 × 18 cm"], ["Material", "Feltro RPET · Silicone"]], "c": null, "p": "Impressão DTF", "g": [["img/p05-lena.png", "Lena"]], "pr": 5}, "p06": {"n": "Minet", "r": "6140", "cat": "Feltro & Apoio de Pulso", "d": "Tapete de rato com apoio de pulso acolchoado, em poliéster com base de borracha antiderrapante. Mais conforto em horas de trabalho.", "s": [["Dimensões", "20,5 × 24,3 cm"], ["Material", "Poliéster · Borracha"]], "c": [["Azul", "#1F6FD0"], ["Branco", "#EDEDED"], ["Preto", "#1B1B1B"], ["Verde", "#1C9A4C"], ["Vermelho", "#C3202B"], ["Laranja", "#E8731F"], ["Roxo", "#B24DB5"]], "p": "Impressão DTF · Sublimação", "g": [["img/p06-minet.png", "Minet"], ["img/p06-branco.png", "Minet"], ["img/p06-cores.png", "Minet"]], "pr": 8}, "p07": {"n": "Kaishen", "r": "1870", "cat": "Feltro & Apoio de Pulso", "d": "Tapete de rato em cortiça com apoio de pulso acolchoado e base de borracha antiderrapante.", "s": [["Dimensões", "20 × 22,3 cm"], ["Material", "Cortiça · Borracha"]], "c": null, "p": "Impressão DTF", "g": [["img/p07-kaishen.png", "Kaishen"], ["img/p07-lado.png", "Kaishen"]], "pr": 8}, "p08": {"n": "Freila", "r": "1871", "cat": "Feltro & Apoio de Pulso", "d": "Tapete de rato em poliéster RPET (reciclado) com apoio de pulso acolchoado e base de borracha antiderrapante.", "s": [["Dimensões", "20 × 22,3 cm"], ["Material", "Poliéster RPET · Borracha"]], "c": null, "p": "Impressão DTF", "g": [["img/p08-freila.png", "Freila"], ["img/p08-lado.png", "Freila"]], "pr": 8}, "p09": {"n": "Hossian", "r": "20247", "cat": "Multifunções", "d": "Tapete multifunções em poliéster RPET e bambu, com organizador amovível e carregador sem fios de 15 W. Dobrável, com base antiderrapante.", "s": [["Dimensões", "20,8 × 28 cm"], ["Material", "Poliéster 300D RPET · Bambu"]], "c": null, "p": "Impressão DTF", "g": [["img/p09-hossian.png", "Hossian"], ["img/p09-amovivel.png", "Hossian"], ["img/p09-uso.png", "Hossian"]], "pr": 12}, "p10": {"n": "Craig", "r": "20246", "cat": "Multifunções", "d": "Tapete multifunções em poliéster RPET e bambu, com hub USB (1 porta Tipo C e 4 portas USB 2.0) e suporte para telemóvel.", "s": [["Dimensões", "22 × 24 cm"], ["Material", "Poliéster 300D RPET · Bambu"]], "c": null, "p": "Impressão DTF", "g": [["img/p10-craig.png", "Craig"], ["img/p10-uso.png", "Craig"]], "pr": 18}, "p11": {"n": "Deuz", "r": "20860", "cat": "Multifunções", "d": "Tapete multifunções em poliéster RPET com carregador sem fios de 15 W, espaços para canetas e suporte para telemóvel.", "s": [["Dimensões", "31 × 27 cm"], ["Material", "Poliéster 300D RPET"]], "c": null, "p": "Impressão DTF", "g": [["img/p11-deuz.png", "Deuz"], ["img/p11-uso.png", "Deuz"]], "pr": 8}, "p12": {"n": "Kimy", "r": "1194", "cat": "Carregadores sem Fios", "d": "Tapete de rato com carregador sem fios de 10 W, em poliéster RPET com veludo. Dobra-se para servir de suporte ao telemóvel.", "s": [["Dimensões", "26,5 × 20,5 cm"], ["Material", "Poliéster 300D RPET · Veludo"]], "c": [["Preto", "#1B1B1B"], ["Cinzento", "#8A8D91"]], "p": "Impressão DTF", "g": [["img/p12-kimy.png", "Kimy"], ["img/p12-cores.png", "Kimy"], ["img/p12-dobrado.png", "Kimy"]], "pr": 10}, "p13": {"n": "Dangox", "r": "21330", "cat": "Carregadores sem Fios", "d": "Tapete de rato dobrável em PU reciclado com carregador sem fios de 10 W. Dobrado, serve de suporte para o telemóvel.", "s": [["Dimensões", "20,5 × 8,8 cm (dobrado)"], ["Material", "PU reciclado · Veludo"]], "c": [["Vermelho", "#D6381F"], ["Azul", "#2159B8"], ["Preto", "#1B1B1B"]], "p": "Impressão DTF", "g": [["img/p13-dangox.png", "Dangox"], ["img/p13-cores.png", "Dangox"], ["img/p13-dobrado.png", "Dangox"]], "pr": 10}, "p14": {"n": "Bistol", "r": "1366", "cat": "Carregadores sem Fios", "d": "Base de carregamento sem fios de 10 W em bambu natural, redonda, que serve também de tapete de rato.", "s": [["Dimensões", "Ø 21 × 0,8 cm"], ["Material", "Bambu"]], "c": null, "p": "Impressão DTF", "g": [["img/p14-bistol.png", "Bistol"]], "pr": 6}, "p15": {"n": "Relium", "r": "6615", "cat": "Carregadores sem Fios", "d": "Tapete de rato em cortiça com carregador sem fios de 5 W e veludo. Dobra-se para servir de suporte ao telemóvel.", "s": [["Dimensões", "26,5 × 20,5 cm"], ["Material", "Cortiça · Veludo"]], "c": null, "p": "Impressão DTF", "g": [["img/p15-relium.png", "Relium"], ["img/p15-uso.png", "Relium"]], "pr": 8}};
+  var REF={}; Object.keys(PROD).forEach(function(k){REF[PROD[k].r]=k;});
+  var CATS=[["cl","Clássicos","#7E96B8"],["ap","Apoio de pulso","#B88D63"],["ca","Carregadores","#45707A"],["mf","Multifunções","#7A3445"]];
+  var tpl=document.getElementById('tpl');
+  var pages=[];
+  Array.prototype.forEach.call(tpl.content.querySelectorAll('section.page'),function(sec){
+    if(!sec.hasAttribute('data-plain')){
+      var num=document.createElement('div');num.className='pnum';num.textContent=sec.dataset.num;sec.appendChild(num);
+      var cat=sec.dataset.cat, name=sec.dataset.catname;
+      var tabs=document.createElement('div');tabs.className='tabs';
+      CATS.forEach(function(c){var s=document.createElement('span');s.textContent=c[1];s.style.background=c[2];if(c[0]===cat){s.className='on';name=name||c[1];}tabs.appendChild(s);});
+      sec.appendChild(tabs);
+      var pc=document.createElement('div');pc.className='pcat';pc.textContent=name||'';sec.appendChild(pc);
+      var f=document.createElement('div');f.className='pfoot';f.textContent='douroid.com · Preços por unidade + IVA';sec.appendChild(f);
+    }
+    Array.prototype.forEach.call(sec.querySelectorAll('.pt'),function(pt){
+      var sm=pt.querySelector('h3 small'); var k=sm&&REF[sm.textContent.trim()];
+      if(!k) return;
+      pt.setAttribute('data-prod',k); pt.setAttribute('tabindex','0'); pt.setAttribute('role','button');
+      pt.setAttribute('aria-label','Ver detalhes de '+PROD[k].n);
+      var m=document.createElement('span'); m.className='more'; m.textContent='Ver detalhes ›'; pt.appendChild(m);
+    });
+    pages.push(sec.outerHTML);
+  });
+  var N=pages.length;
+  var printall=document.getElementById('printall');
+  window.addEventListener('beforeprint',function(){ if(!printall.firstChild) printall.innerHTML=pages.join(''); });
+
+  var NUMS=pages.map(function(h){var m=h.match(/data-num="(\d+)"/);return m?m[1]:null;});
+  var book=document.getElementById('book'), stage=document.getElementById('stage'), wrap=document.getElementById('wrap');
+  var prevB=document.getElementById('prev'), nextB=document.getElementById('next');
+  var where=document.getElementById('where'), count=document.getElementById('count'), jump=document.getElementById('jump');
+  var W=794,H=1123, mode='', cur=0, scale=1, busy=false, curOff=0, F=null;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var NODES=[];
+  function el(i){ if(i==null||i<0||i>=N) return null;
+    if(!NODES[i]){ var d=document.createElement('div'); d.innerHTML=pages[i]; NODES[i]=d.firstElementChild; }
+    return NODES[i]; }
+  // build every page once and decode its photos up front, so nothing decodes mid-turn
+  // prepare only the pages around the current one, so the first open stays light on phones
+  var warmed=[];
+  function warm(c){ setTimeout(function(){ for(var i=Math.max(0,c-3);i<=Math.min(N-1,c+4);i++){ if(warmed[i]) continue; warmed[i]=1;
+    Array.prototype.forEach.call(el(i).querySelectorAll('img'),function(im){ if(im.decode) im.decode().catch(function(){}); }); } },120); }
+  var S=Math.floor(N/2)+1;
+  function sp(s){ var L=2*s-1, R=2*s; return [L>=0&&L<N?L:null, R<N?R:null]; }
+  function spreadOf(p){ return Math.floor((p+1)/2); }
+  function slot(i,x,cls){ var e=el(i); if(!e&&!cls) return null; var s=document.createElement('div'); s.className='slot'+(cls?' '+cls:''); s.style.left=x+'px'; if(e) s.appendChild(e); return s; }
+  function offsetFor(pair){ if(pair[0]==null) return -W/2; if(pair[1]==null) return W/2; return 0; }
+  function setT(off){ curOff=off; book.style.transform='scale('+scale+') translateX('+off+'px)'; }
+
+  function fit(){
+    var narrow=wrap.clientWidth<720, tiny=wrap.clientWidth<560;
+    var navw=tiny?8:narrow?96:124;
+    var aw=Math.max(200,wrap.clientWidth-navw), ah=Math.max(200,wrap.clientHeight-12);
+    mode=(aw/ah>1.05 && aw>=640)?'spread':'single';
+    var bw=mode==='spread'?2*W:W;
+    scale=Math.min(aw/bw, ah/H);
+    stage.style.width=Math.round(bw*scale)+'px';
+    stage.style.height=Math.round(H*scale)+'px';
+    stage.classList.toggle('single',mode==='single');
+    render();
+  }
+
+  function render(){
+    F=null;
+    book.replaceChildren();
+    if(mode==='spread'){
+      var pair=sp(spreadOf(cur)), a=slot(pair[0],0), b=slot(pair[1],W);
+      if(a) book.appendChild(a); if(b) book.appendChild(b);
+      if(a&&b){ var sn=document.createElement('div'); sn.className='spine'; book.appendChild(sn); }
+      setT(offsetFor(pair));
+    } else {
+      book.appendChild(slot(cur,W)); setT(-W);
+    }
+    status(); warm(cur);
+  }
+
+  function status(){
+    var label, idx, total;
+    if(mode==='spread'){
+      var s=spreadOf(cur), pair=sp(s); idx=s+1; total=S;
+      var ns=pair.map(function(p){return p==null?null:NUMS[p];}).filter(Boolean);
+      label= pair[1]===0?'Capa' : (pair[0]===N-1&&pair[1]==null)?'Contracapa' : ns.length===2?'Páginas '+ns[0]+'–'+ns[1] : ns.length===1?'Página '+ns[0] : 'Capa';
+      prevB.disabled=s===0; nextB.disabled=s===S-1;
+    } else {
+      idx=cur+1; total=N;
+      label= cur===0?'Capa' : cur===N-1?'Contracapa' : NUMS[cur]?'Página '+NUMS[cur]:'Página em branco';
+      prevB.disabled=cur===0; nextB.disabled=cur===N-1;
+    }
+    where.textContent=label; count.textContent=idx+' / '+total;
+    var best='0'; Array.prototype.forEach.call(jump.options,function(o){ if(+o.value<=cur) best=o.value; }); jump.value=best;
+  }
+
+  /* ---------- page curl engine ----------
+     Book space: spread is [0,2W] x [0,H]. The turning leaf spans [L,L+W].
+     The grabbed corner C is dragged to P; the fold is the perpendicular bisector of CP.
+     The flap (back of the leaf) is the reflection of the leaf part beyond the fold. */
+  function clipPoly(pts,fn){ var out=[]; for(var i=0;i<pts.length;i++){ var a=pts[i], b=pts[(i+1)%pts.length], fa=fn(a), fb=fn(b);
+      if(fa>=0) out.push(a); if((fa>=0)!==(fb>=0)){ var t=fa/(fa-fb); out.push([a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t]); } } return out; }
+  function polyCss(p){ return p.length<3?'polygon(0 0,0 0,0 0)':'polygon('+p.map(function(q){return q[0].toFixed(1)+'px '+q[1].toFixed(1)+'px';}).join(',')+')'; }
+  var RECT=[[0,0],[W,0],[W,H],[0,H]];
+  function shade(cls){ var d=document.createElement('div'); d.className='shade '+cls; return d; }
+
+  function setupFlip(dir){
+    var o={dir:dir};
+    if(mode==='spread'){
+      var s=spreadOf(cur), t=s+dir; if(t<0||t>=S) return null;
+      var c=sp(s), n=sp(t);
+      o.newCur=n[0]!=null?n[0]:n[1]; o.offFrom=offsetFor(c); o.offTo=offsetFor(n);
+      if(dir>0){ o.staticI=c[0]; o.staticX=0; o.underI=n[1]; o.underX=W; o.frontI=c[1]; o.backI=n[0]; o.L=W; o.sx=W; o.cx=2*W; }
+      else { o.staticI=c[1]; o.staticX=W; o.underI=n[0]; o.underX=0; o.frontI=c[0]; o.backI=n[1]; o.L=0; o.sx=W; o.cx=0; }
+      if(o.frontI==null) return null;
+    } else {
+      var tp=cur+dir; if(tp<0||tp>=N) return null;
+      o.newCur=tp; o.offFrom=o.offTo=-W; o.single=true; o.staticI=null; o.underX=W; o.backI=-1; o.L=W; o.sx=W; o.cx=2*W;
+      if(dir>0){ o.underI=tp; o.frontI=cur; } else { o.underI=cur; o.frontI=tp; o.reverse=true; }
+    }
+    o.sign=o.cx>o.sx?1:-1; o.cy=H;
+    book.replaceChildren();
+    var st=slot(o.staticI,o.staticX); if(st) book.appendChild(st);
+    var un=slot(o.underI,o.underX); if(un){ o.unShade=shade('cast'); un.appendChild(o.unShade); book.appendChild(un); }
+    if(mode==='spread'){ var sn=document.createElement('div'); sn.className='spine'; book.appendChild(sn); }
+    o.front=slot(o.frontI,o.L,'leaf'); o.frShade=shade('curve'); o.front.appendChild(o.frShade); book.appendChild(o.front);
+    o.back=document.createElement('div'); o.back.className='slot flap'; o.back.style.left='0px';
+    o.backIn=document.createElement('div'); o.backIn.className='flapin'+(o.backI>=0?'':' paper');
+    var bp=o.backI>=0?el(o.backI):null; if(bp) o.backIn.appendChild(bp);
+    o.bkShade=shade('fold'); o.backIn.appendChild(o.bkShade); o.back.appendChild(o.backIn); var clip=document.createElement('div'); clip.className='flapclip'; clip.appendChild(o.back); book.appendChild(clip);
+    return o;
+  }
+  function cons(o,P){
+    // the page stays attached at the spine: the grabbed point can never be further from
+    // the top or bottom of the spine than it is on the flat page
+    var A=[o.sx,0], B=[o.sx,H], rA=Math.hypot(W,o.cy), rB=Math.hypot(W,H-o.cy);
+    // keep the grab height close to where it started, so the sheet turns instead of being pulled away
+    var lim=H*0.18; P=[P[0], Math.max(o.cy-lim, Math.min(o.cy+lim, P[1]))];
+    for(var k=0;k<3;k++){
+      var dx=P[0]-A[0], dy=P[1]-A[1], d=Math.hypot(dx,dy); if(d>rA){ P=[A[0]+dx*rA/d, A[1]+dy*rA/d]; }
+      dx=P[0]-B[0]; dy=P[1]-B[1]; d=Math.hypot(dx,dy); if(d>rB){ P=[B[0]+dx*rB/d, B[1]+dy*rB/d]; }
+    }
+    return P;
+  }
+  function progress(o,P){ return Math.max(0,Math.min(1,(o.cx-P[0])*o.sign/(2*W))); }
+  function draw(o,P){
+    P=cons(o,P); o.P=P;
+    var C=[o.cx,o.cy], dx=C[0]-P[0], dy=C[1]-P[1], len=Math.hypot(dx,dy), L=o.L;
+    var pr=progress(o,P);
+    setT(o.offFrom+(o.offTo-o.offFrom)*pr);
+    if(len<0.5){ o.front.style.clipPath='none'; o.back.style.display='none'; o.frShade.style.opacity=0; if(o.unShade) o.unShade.style.opacity=0; return; }
+    o.back.style.display='';
+    var nx=dx/len, ny=dy/len, Mx=(C[0]+P[0])/2, My=(C[1]+P[1])/2;
+    o.front.style.clipPath=polyCss(clipPoly(RECT,function(p){ return -((p[0]+L-Mx)*nx+(p[1]-My)*ny); }));
+    var mfn=function(u){ return [L+W-u[0], u[1]]; };
+    o.backIn.style.clipPath=polyCss(clipPoly(RECT,function(p){ var q=mfn(p); return (q[0]-Mx)*nx+(q[1]-My)*ny; }));
+    var f=function(u){ var q=mfn(u), k=2*((q[0]-Mx)*nx+(q[1]-My)*ny); return [q[0]-k*nx, q[1]-k*ny]; };
+    var f0=f([0,0]), f1=f([1,0]), f2=f([0,1]);
+    o.back.style.transform='matrix('+(f1[0]-f0[0])+','+(f1[1]-f0[1])+','+(f2[0]-f0[0])+','+(f2[1]-f0[1])+','+f0[0]+','+f0[1]+')';
+    var wS=Math.min(len*0.45,160), a=Math.min(1,len/120);
+    // fold highlight on the flap, in flap-local coords
+    var u0=[L+W-Mx, My], g=Math.atan2(ny,-nx)*180/Math.PI;
+    o.bkShade.style.transform='translate('+u0[0]+'px,'+u0[1]+'px) rotate('+g+'deg) translate(0,-1500px)';
+ o.bkShade.style.opacity=a;
+    // curve shading on the front leaf (spine side of the fold), leaf-local
+    var gf=Math.atan2(-ny,-nx)*180/Math.PI;
+    o.frShade.style.transform='translate('+(Mx-L)+'px,'+My+'px) rotate('+gf+'deg) translate(0,-1500px)';
+ o.frShade.style.opacity=a;
+    // shadow cast onto the revealed page
+    if(o.unShade){ var gc=Math.atan2(ny,nx)*180/Math.PI;
+      o.unShade.style.transform='translate('+(Mx-o.underX)+'px,'+My+'px) rotate('+gc+'deg) translate(0,-1500px)';
+      o.unShade.style.opacity=a*(1-pr*0.7); }
+  }
+  function doneP(o){ return [o.cx-2*W*o.sign, o.cy]; }
+  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+  function animate(o,from,to,ms,lift,cb){
+    var t0=null;
+    function step(ts){ if(t0==null) t0=ts; var t=Math.min(1,(ts-t0)/ms), e=ease(t);
+      var x=from[0]+(to[0]-from[0])*e, y=from[1]+(to[1]-from[1])*e - lift*Math.sin(Math.PI*e)*(o.cy===H?1:o.cy===0?-1:0);
+      draw(o,[x,y]); if(t<1) requestAnimationFrame(step); else cb&&cb(); }
+    requestAnimationFrame(step);
+  }
+  function finish(o,complete){
+    busy=true; o.following=false;
+    var C=[o.cx,o.cy], D=doneP(o);
+    var target=o.reverse ? (complete?C:D) : (complete?D:C);
+    var dist=Math.hypot(target[0]-o.P[0], target[1]-o.P[1]);
+    animate(o,o.P,target,Math.max(180,Math.min(650,dist*0.55)),0,function(){
+      if(complete) cur=o.newCur; busy=false; render(); });
+  }
+  function autoFlip(dir){
+    if(busy) return;
+    if(F) F.following=false;
+    var o=(F&&F.dir===dir)?F:setupFlip(dir); if(!o) return;
+    if(reduce){ cur=o.newCur; render(); return; }
+    F=o; busy=true;
+    var C=[o.cx,o.cy], D=doneP(o), from=o.P||(o.reverse?D:C), to=o.reverse?C:D;
+    animate(o,from,to,900,H*0.12,function(){ cur=o.newCur; busy=false; render(); });
+  }
+
+  var modal=document.getElementById('modal'), mImg=document.getElementById('mImg'), mThumbs=document.getElementById('mThumbs'),
+      mInfo=document.getElementById('mInfo'), mCount=document.getElementById('mCount'), mClose=document.getElementById('mClose');
+  var mk=null, mi=0, lastFocus=null;
+  function showImg(i){ var g=PROD[mk].g; mi=(i+g.length)%g.length; mImg.src=g[mi][0]; mImg.alt=g[mi][1];
+    mCount.textContent=(mi+1)+' / '+g.length;
+    Array.prototype.forEach.call(mThumbs.children,function(b,j){b.setAttribute('aria-current',j===mi?'true':'false');});
+    document.getElementById('mPrev').hidden=document.getElementById('mNext').hidden=g.length<2; }
+  function openProd(k,src){
+    var p=PROD[k]; mk=k; lastFocus=document.activeElement;
+    mThumbs.innerHTML=p.g.map(function(x,j){return '<button type="button" data-i="'+j+'" aria-label="Foto '+(j+1)+'"><img src="'+x[0]+'" alt=""></button>';}).join('');
+    var h='<div class="lbl">'+p.cat+'</div><h2 id="mName">'+p.n+'<small>'+p.r+'</small></h2><p class="desc">'+p.d+'</p>';
+    h+='<dl class="dl">'+p.s.map(function(r){return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>';}).join('')+'</dl>';
+    if(p.c) h+='<div class="blk"><b>Cores</b><div class="cols">'+p.c.map(function(c){return '<span><i style="background:'+c[1]+'"></i>'+c[0]+'</span>';}).join('')+'</div></div>';
+    if(p.i) h+='<div class="blk"><b>Inclui</b>'+p.i+'</div>';
+    h+='<div class="blk"><b>Personalização</b>'+p.p+'</div>';
+    var cp=p.pr;
+    h+='<div class="blk"><b>Preço por unidade</b><div class="pval">'+cp+' €</div><ul class="pnote"><li>Acresce IVA.</li><li>Artigo sem personalização.</li><li>A personalização é orçamentada à parte.</li></ul></div>';
+    h+='<div class="ask"><div><strong>'+'Peça o seu orçamento'+'</strong><br>Ref. '+p.r+'</div><div style="text-align:right">geraldouroid@gmail.com<br>939 898 827 · 937 659 457</div></div>';
+    mInfo.innerHTML=h;
+    var start=0; if(src){ p.g.forEach(function(x,j){ if(src.indexOf(x[0])>-1) start=j; }); }
+    modal.hidden=false; mInfo.scrollTop=0; showImg(start); mClose.focus();
+  }
+  function closeProd(){ modal.hidden=true; mk=null; if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
+  mClose.addEventListener('click',closeProd);
+  modal.addEventListener('click',function(e){ if(e.target===modal) closeProd(); });
+  document.getElementById('mPrev').addEventListener('click',function(){showImg(mi-1);});
+  document.getElementById('mNext').addEventListener('click',function(){showImg(mi+1);});
+  mThumbs.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) showImg(+b.dataset.i); });
+  function prodAt(t){
+    if(!t.closest) return null;
+    var pt=t.closest('[data-prod]'); if(pt) return [pt.getAttribute('data-prod'),null];
+    var box=t.closest('.ph,.ci,.th>div'); if(!box||t.closest('.cover,.back')) return null;
+    var im=box.querySelector('img'); var m=im&&im.getAttribute('src').match(/img\/(p\d\d)-/);
+    return m&&PROD[m[1]]?[m[1],im.getAttribute('src')]:null;
+  }
+  prevB.addEventListener('click',function(){autoFlip(-1);});
+  nextB.addEventListener('click',function(){autoFlip(1);});
+  jump.addEventListener('change',function(){ if(busy) return; cur=+jump.value; render(); });
+  document.addEventListener('keydown',function(e){
+    if(!modal.hidden){
+      if(e.key==='Escape'){e.preventDefault();closeProd();}
+      else if(e.key==='ArrowRight'){e.preventDefault();showImg(mi+1);}
+      else if(e.key==='ArrowLeft'){e.preventDefault();showImg(mi-1);}
+      return;
+    }
+    if((e.key==='Enter'||e.key===' ')&&e.target.closest&&e.target.closest('[data-prod]')){e.preventDefault();openProd(e.target.closest('[data-prod]').getAttribute('data-prod'));return;}
+    if(e.target===jump) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();autoFlip(1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();autoFlip(-1);}
+  });
+
+  function toBook(e){ var r=stage.getBoundingClientRect(); return [(e.clientX-r.left)/scale-curOff, (e.clientY-r.top)/scale]; }
+  // which way a grab at book point b would turn the page (outer 32% of a turnable page)
+  function zoneDir(b){
+    var zx=W*0.32;
+    if(mode==='spread'){
+      var s=spreadOf(cur), pair=sp(s);
+      if(s===0 && b[0]>=W && b[0]<=2*W) return 1;
+      if(s===S-1 && pair[1]==null && b[0]>=0 && b[0]<W) return -1;
+      if(pair[1]!=null && s<S-1 && b[0]>2*W-zx && b[0]<=2*W+4) return 1;
+      if(pair[0]!=null && s>0 && b[0]<zx && b[0]>=-4) return -1;
+    } else {
+      if(cur<N-1 && b[0]>2*W-zx) return 1;
+      if(cur>0 && b[0]<W+zx) return -1;
+    }
+    return 0;
+  }
+  function nearCorner(b,dir){
+    var cx = mode==='single' ? (dir>0?2*W:W) : (dir>0?2*W:0);
+    return Math.abs(b[0]-cx)<W*0.16 && (b[1]>H*0.86 || b[1]<H*0.14);
+  }
+  // in single view the visible page is [W,2W]; stretch the pointer so the flap can travel the full turn
+  function ptrP(o,b){ return mode==='single' ? [2*(b[0]-W), b[1]] : b; }
+
+  var down=null, dragging=false, peeking=false, qP=null, qO=null, qRaf=0;
+  // the page eases toward the pointer instead of jumping to it, which removes jitter from hand/mouse noise
+  function queueDraw(o,P){ qO=o; qP=P; if(!o.Pc) o.Pc=(o.P||[o.cx,o.cy]).slice(); o.following=true; if(!qRaf) qRaf=requestAnimationFrame(follow); }
+  function follow(){ qRaf=0; var o=qO; if(!o||o!==F||!o.following) return;
+    var k=peeking?0.16:0.32; o.Pc[0]+=(qP[0]-o.Pc[0])*k; o.Pc[1]+=(qP[1]-o.Pc[1])*k;
+    draw(o,o.Pc);
+    if(Math.hypot(qP[0]-o.Pc[0],qP[1]-o.Pc[1])>0.3) qRaf=requestAnimationFrame(follow); }
+  stage.addEventListener('pointerdown',function(e){
+    if(busy&&!peeking) return;
+    var b=toBook(e); down={b:b, dir:zoneDir(b), x:e.clientX, y:e.clientY, target:e.target};
+    dragging=false;
+    try{ stage.setPointerCapture(e.pointerId); }catch(_){}
+  });
+  stage.addEventListener('pointermove',function(e){
+    var b=toBook(e);
+    if(down){
+      if(!dragging && Math.hypot(e.clientX-down.x,e.clientY-down.y)>6 && down.dir){
+        if(!F||F.dir!==down.dir){ F=setupFlip(down.dir); }
+        if(F){ dragging=true; peeking=false; busy=true; var gy=down.b[1]; F.cy = gy<H*0.2 ? 0 : gy>H*0.8 ? H : gy; F.Pc=null; F.P=null; }
+      }
+      if(dragging&&F) queueDraw(F,ptrP(F,b));
+      return;
+    }
+    if(e.pointerType!=='mouse' || (busy&&!peeking)) return;
+    var dir=zoneDir(b);
+    if(dir && nearCorner(b,dir)){
+      if(!F||F.dir!==dir){ F=setupFlip(dir); if(!F) return; }
+      peeking=true; busy=true;
+      F.cy = b[1]<H/2 ? 0 : H;
+      var C=[F.cx,F.cy];
+      if(F.reverse){ queueDraw(F,[doneP(F)[0]+90, F.cy+(F.cy===H?-70:70)]); }
+      else { var v=[-F.sign, F.cy===H?-0.8:0.8], d=Math.hypot(v[0],v[1]), want=120;
+        if(d<1){ v=[-F.sign,F.cy===H?-1:1]; d=Math.SQRT2; }
+        queueDraw(F,[C[0]+v[0]/d*want, C[1]+v[1]/d*want]); }
+    } else if(peeking){ var o=F; peeking=false; finish(o,!!o.reverse && false); }
+  });
+  stage.addEventListener('pointerleave',function(){ if(peeking&&!down){ var o=F; peeking=false; finish(o,false); } });
+  function endPointer(e){
+    if(!down) return;
+    var d=down; down=null;
+    if(dragging&&F){ dragging=false; var o=F, pr=progress(o,o.P);
+      var complete = o.reverse ? pr<0.5 : pr>0.5;
+      finish(o,complete); return; }
+    if(peeking&&F){ peeking=false; busy=false; autoFlip(F.dir); return; }
+    if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6) return;
+    var hit=prodAt(d.target); if(hit){ openProd(hit[0],hit[1]); return; }
+    var bx=d.b[0]; autoFlip(mode==='spread' ? (bx>=W?1:-1) : (bx>=1.5*W?1:-1));
+  }
+  stage.addEventListener('pointerup',endPointer);
+  stage.addEventListener('pointercancel',function(){ if(dragging&&F){ dragging=false; down=null; finish(F,false);} else down=null; });
+  window.addEventListener('resize',function(){ if(!busy) fit(); });
+  fit();
+})();
+</script>
+
+</body></html>
